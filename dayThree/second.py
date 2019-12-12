@@ -25,34 +25,23 @@ def getCablePoints(directions):
                 x -= 1
             if direction == RIGHT:
                 x += 1
-            cable.append([x, y])
+            cable.append((x, y))
     return cable
 
 
-def stepsDistance(point):
-    return abs(point[0]) + 1 + abs(point[1]) + 1
-
-
-def getIntersections(cableOne, cableTwo):
-    intersections = []
-    for stepOne, segmentOne in enumerate(cableOne):
-        for stepTwo, segmentTwo in enumerate(cableTwo):
-            if segmentOne == segmentTwo:
-                intersections.append([stepOne, stepTwo])
-                break
-    return intersections
+def stepsDistance(point, cableOne, cableTwo):
+    return abs(cableOne.index(point)) + 1 + abs(cableTwo.index(point)) + 1
 
 
 cableOne = getCablePoints(cableOneDirections)
 cableTwo = getCablePoints(cableTwoDirections)
 
-# This is slow af since it's O(m*n) when this could easily be done in O(n+m) but gets the job done
-duplicatedTuples = getIntersections(cableOne, cableTwo)
+duplicatedTuples = list(set(cableOne).intersection(cableTwo))
 
-min = stepsDistance(duplicatedTuples[0])
+min = stepsDistance(duplicatedTuples[0], cableOne, cableTwo)
 for intersection in duplicatedTuples:
-    candidate = stepsDistance(intersection)
-    if (candidate < min):
+    candidate = stepsDistance(intersection, cableOne, cableTwo)
+    if candidate < min:
         min = candidate
 
 print(min)

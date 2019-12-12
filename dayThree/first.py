@@ -25,7 +25,7 @@ def getCablePoints(directions):
                 x -= 1
             if direction == RIGHT:
                 x += 1
-            cable.append([x, y])
+            cable.append((x, y))
     return cable
 
 
@@ -45,13 +45,12 @@ def getIntersections(cableOne, cableTwo):
 cableOne = getCablePoints(cableOneDirections)
 cableTwo = getCablePoints(cableTwoDirections)
 
-# This is slow af since it's O(m*n) when this could easily be done in O(n+m) but gets the job done
-duplicatedTuples = getIntersections(cableOne, cableTwo)
+duplicatedTuples = list(set(cableOne).intersection(cableTwo))
 
 min = manhatanDistance(duplicatedTuples[0])
 for intersection in duplicatedTuples:
     candidate = manhatanDistance(intersection)
-    if (candidate < min):
+    if candidate < min:
         min = candidate
 
 print(min)
