@@ -4,7 +4,7 @@ HALT_INSTRUCTION = 99
 SUM_INSTRUCTION = 1
 MULT_INSTRUCTION = 2
 
-with open('data/first.txt') as data:
+with open('data/data.txt') as data:
     code = [int(x) for x in data.readline().split(',')]
 
 if len(code) < MIN_CODE_LENGTH:

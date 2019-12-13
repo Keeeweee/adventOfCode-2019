@@ -5,6 +5,6 @@ def getFuel(mass):
     return newMass + getFuel(newMass)
 
 
-masses = [int(line.rstrip('\n')) for line in open('data/first.txt')]
+masses = [int(line.rstrip('\n')) for line in open('data/data.txt')]
 
 print(sum(map(getFuel, masses)))

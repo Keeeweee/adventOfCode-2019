@@ -6,7 +6,7 @@ MULT_INSTRUCTION = 2
 
 DESIRED_OUTPUT = 19690720
 
-with open('data/second.txt') as data:
+with open('data/data.txt') as data:
     code = [int(x) for x in data.readline().split(',')]
 
 if len(code) < MIN_CODE_LENGTH:
