@@ -1,15 +1,20 @@
-from .Instructions import Sum, Mult, Input, Output, Instruction
+from .Instructions import Sum, Mult, Input, Output, Instruction, Equals, JumpIfFalse, JumpIfTrue, LessThan
 from typing import List
 
 
 class Parser:
     INSTRUCTION_LEN = 2
 
-    HALT_INSTRUCTION = 99
-    SUM_INSTRUCTION = 1
-    MULT_INSTRUCTION = 2
-    INPUT_INSTRUCTION = 3
-    OUTPUT_INSTRUCTION = 4
+    HALT_OPCODE = 99
+    SUM_OPCODE = 1
+    MULT_OPCODE = 2
+    INPUT_OPCODE = 3
+    OUTPUT_OPCODE = 4
+    JIT_OPCODE = 5
+    JIF_OPCODE = 6
+    LT_OPCODE = 7
+    EQ_OPCODE = 8
+
 
     POS_MODE = 0
     INM_MODE = 1
