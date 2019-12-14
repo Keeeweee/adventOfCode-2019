@@ -10,13 +10,13 @@ class Sum(Instruction):
         self.second = args[1]
         self.write = args[2]
 
-    def run(self, code):
+    def run(self, code, pointer):
         code[self.write] = self.first + self.second
-        return None, self.arity + 1
+        return None, pointer + self.arity + 1
 
     @classmethod
     def getArity(cls):
         return cls.arity
 
     def __str__(self):
-        return f'[SUM] {self.first} + {self.second} = {self.first + self.second} -> {self.write}'
+        return f'[SUM] Write {self.first} + {self.second} at {self.write} => {self.first + self.second} -> {self.write}'

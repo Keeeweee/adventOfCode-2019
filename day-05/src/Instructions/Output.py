@@ -8,8 +8,8 @@ class Output(Instruction):
         super().__init__(args)
         self.read = args[0]
 
-    def run(self, code):
-        return self.read, self.arity + 1
+    def run(self, code, pointer):
+        return self.read, pointer + self.arity + 1
 
     @classmethod
     def getArity(cls):

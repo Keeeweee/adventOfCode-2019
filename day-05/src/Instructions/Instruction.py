@@ -8,7 +8,7 @@ class Instruction:
         if len(args) != self.arity:
             raise ValueError
 
-    def run(self, code: List[int]) -> (int, int):
+    def run(self, code: List[int], pointer: int) -> (int, int):
         pass
 
     @classmethod
