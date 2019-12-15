@@ -3,6 +3,12 @@ from typing import List
 
 
 class Parser:
+    STATE_START = 'START'
+    STATE_RUN = 'RUN'
+    STATE_INPUT = 'INPUT'
+    STATE_OUTPUT = 'OUTPUT'
+    STATE_HALT = 'HALT'
+
     INSTRUCTION_LEN = 2
 
     HALT_OPCODE = 99
@@ -19,11 +25,12 @@ class Parser:
     POS_MODE = 0
     INM_MODE = 1
 
-    def __init__(self, code, inputProvider):
+    def __init__(self, code):
         self.code = code
         self.pointer = 0
         self.outputs = []
-        self.inputProvider = inputProvider
+        self.inputs = []
+        self.state = self.STATE_START
 
     def parseInstruction(self, code: List[int], pointer: int):
         instructionStr = str(code[pointer])
@@ -55,7 +62,9 @@ class Parser:
                 raise ValueError
 
         if instruction == Input:
-            return instruction(args, self.inputProvider.getNextValue())
+            newInput = self.inputs[0]
+            self.inputs= self.inputs[1:]
+            return instruction(args, newInput)
 
         return instruction(args)
 
@@ -80,7 +89,11 @@ class Parser:
             raise ValueError
 
     def run(self):
+        self.state = self.STATE_RUN
         while self.code[self.pointer] != self.HALT_OPCODE:
+            if self.code[self.pointer] == self.INPUT_OPCODE and len(self.inputs) == 0:
+                self.state = self.STATE_INPUT
+                return self.STATE_INPUT
             instruction = self.parseInstruction(self.code, self.pointer)
             # print(str(instruction))
             output, self.pointer = instruction.run(self.code, self.pointer)
@@ -88,7 +101,9 @@ class Parser:
 
             if output is not None:
                 self.outputs.append(output)
-
-
+                self.state = self.STATE_OUTPUT
+                return self.STATE_OUTPUT
         # print(self.outputs)
         # print(self.code)
+        self.state = self.STATE_HALT
+        return self.STATE_HALT
