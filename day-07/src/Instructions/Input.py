@@ -4,10 +4,10 @@ from .Instruction import Instruction
 class Input(Instruction):
     arity = 1
 
-    def __init__(self, args):
+    def __init__(self, args, inputValue):
         super().__init__(args)
-        self.value = int(input("Input value: "))
         self.write = args[0]
+        self.value = inputValue
 
     def run(self, code, pointer):
         code[self.write] = self.value

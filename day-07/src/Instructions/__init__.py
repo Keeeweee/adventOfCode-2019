@@ -6,3 +6,4 @@ from .Equals import Equals
 from .JumpIfFalse import JumpIfFalse
 from .JumpIfTrue import JumpIfTrue
 from .LessThan import LessThan
+from .InputProvider import InputProvider

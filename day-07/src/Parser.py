@@ -1,4 +1,4 @@
-from .Instructions import Sum, Mult, Input, Output, Instruction, Equals, JumpIfFalse, JumpIfTrue, LessThan
+from .Instructions import Sum, Mult, Input, Output, Instruction, Equals, JumpIfFalse, JumpIfTrue, LessThan, InputProvider
 from typing import List
 
 
@@ -19,10 +19,11 @@ class Parser:
     POS_MODE = 0
     INM_MODE = 1
 
-    def __init__(self, code):
+    def __init__(self, code, inputProvider):
         self.code = code
         self.pointer = 0
         self.outputs = []
+        self.inputProvider = inputProvider
 
     def parseInstruction(self, code: List[int], pointer: int):
         instructionStr = str(code[pointer])
@@ -43,6 +44,7 @@ class Parser:
         if instruction not in [Output, JumpIfTrue, JumpIfFalse]: #Add all instructions that DO NOT WRITE
             modes[-1] = self.INM_MODE
 
+
         args = []
         for i in range(arity):
             if modes[i] == self.POS_MODE:
@@ -51,6 +53,9 @@ class Parser:
                 args.append(code[pointer + i +1])
             else:
                 raise ValueError
+
+        if instruction == Input:
+            return instruction(args, self.inputProvider.getNextValue())
 
         return instruction(args)
 
