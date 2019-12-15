@@ -1,5 +1,4 @@
 from src import Parser
-from src.Instructions import InputProvider
 from itertools import permutations
 
 
@@ -16,7 +15,7 @@ if __name__ == '__main__':
 
     max = 0
     perm = []
-    for permutation in permutations(range(5,10)):
+    for permutation in permutations(range(5, 10)):
         # print(permutation)
         codeCopy = code[:]
         parserA = Parser.Parser(code[:])
