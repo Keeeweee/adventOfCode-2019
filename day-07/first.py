@@ -14,8 +14,15 @@ if __name__ == '__main__':
         amplifierValue = 0
         for num in permutation:
             inputProvider = InputProvider(num, amplifierValue)
-            parser = Parser.Parser(code, inputProvider)
-            parser.run()
+            parser = Parser.Parser(code)
+            end = parser.run()
+            while end != 'HALT':
+                if end == 'INPUT':
+                    parser.inputs.append(inputProvider.getNextValue())
+                    end = parser.run()
+                if end == 'OUTPUT':
+                    end = parser.run()
+
             amplifierValue = parser.outputs[-1]
         if amplifierValue > max:
             max = amplifierValue
