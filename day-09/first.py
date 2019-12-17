@@ -11,4 +11,4 @@ if __name__ == '__main__':
         if end == Parser.Parser.STATE_INPUT and parser.inputs != 0:
             parser.inputs.append(input("Input: "))
         end = parser.run()
-    print(parser.outputs)
+    print(parser.outputs[-1])
