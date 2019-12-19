@@ -6,7 +6,13 @@ ROUND = 2
 
 def getAngle(a, b):
     diff = (a[0] - b[0], a[1] - b[1])
-    return -atan2(diff[1], diff[0]) * 180 / pi
+    angle = atan2(diff[1], diff[0])
+    if angle < 0:
+        angle += 2 * pi
+    angle = angle * 180 / pi
+    angle += 90
+    angle %= 360
+    return angle
 
 
 def getAsteroidsInsight(a, b, map) -> int:
@@ -36,7 +42,7 @@ def getAsteroidsMap(basePosition, map):
 
 
 if __name__ == '__main__':
-    map = [list(line.rstrip('\n')) for line in open('data/test_05.txt')]
+    map = [list(line.rstrip('\n')) for line in open('data/data.txt')]
 
     maxAsteroids = 0
     maxPosition = (0, 0)
@@ -52,12 +58,8 @@ if __name__ == '__main__':
     asteroidsMap = getAsteroidsMap(basePosition, map)
     sortedAngleMap = []
     count = 0
-    for key in sorted(asteroidsMap.keys(), key= lambda k: k if k >= -90 else k + 360, reverse=True):
+    for key in sorted(asteroidsMap.keys()):
         sortedAngleMap.append({'angle': key, 'asteroids': asteroidsMap[key], 'index': count})
         count += 1
-    print(maxPosition)
-    print(maxAsteroids)
-    print(atan2(1, 0) * 180 / pi)
-    print(sortedAngleMap)
 
-    print(sortedAngleMap[200]['asteroids'][0][0]*100 + sortedAngleMap[200]['asteroids'][0][1])
+    print(sortedAngleMap[200 - 1]['asteroids'][0][0]*100 + sortedAngleMap[200-1]['asteroids'][0][1])
